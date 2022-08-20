@@ -12,11 +12,10 @@
 <nav class="navbar navbar-light bg-light">
     <div class="container-fluid">
         <div class="navbar-header">
-            <a class="navbar-brand" href="#">Dealership Review</a>
+            <a class="navbar-brand" href="{% url 'djangoapp:index' %}">Dealership Review</a>
         </div>
         <ul class="nav navbar-nav navbar-right">
             {% if user.is_authenticated %}
-            https://ad3b860d.eu-gb.apigw.appdomain.cloud/api/review
             <li>
                 <a class="btn btn-link" href="#">{{ user.first_name }}({{ user.username }})</a>
                 <a class="btn btn-link" href="{% url 'djangoapp:logout' %}">Logout</a>
@@ -37,13 +36,14 @@
         </ul>
     </div>
 </nav>
-
+<div class="container-fluid">
+ <h1>   {{ dealer.full_name }} </h1>
 <div class="card-columns">
     {% for review in reviews %}
-    <div class="card" style="height: 300px; overflow: scroll; overflow-x: hidden;">
-        <img src="{{MEDIA_URL}}/emoji/{{review.sentiment}}.png" class="card-img-center"
-            style="height: 100px; width: 100px; margin-left: 35%; margin-bottom: 5%; margin-top: 2%;">
-        <div class="card-body" style="text-align: center;">
+    <div class="card" style="height: 200px; overflow-x: hidden;">
+        <img src="{{MEDIA_URL}}/emoji/{{review.sentiment}}.png" class="card-img-left"
+            style="height: 40px; width: 40px;">
+        <div class="card-body" style="text-align: left;">
             <h5 class="card-title">{{ review.car_make }}, {{ review.car_model }}</h5>
             <h5 class="card-title">{{ review.car_year }}</h5>
             <p class="card-text">{{ review.review }}</p>
@@ -51,7 +51,8 @@
     </div>
     {% endfor %}
 </div>
-
+<a href="{% url 'djangoapp:add_review' dealer.id %}">Add Review</a>
+</div>
     </body>
 
 </html>
